@@ -120,7 +120,7 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "Request sent is in wrong format"),
             @ApiResponse(responseCode = "500", description = "Server experienced challenge processing your request")
     })
-    @GetMapping("/{projectId}")
+    @DeleteMapping("/{projectId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteProject(@PathVariable Long projectId) {
         return new ResponseEntity<>(projectService.deleteProject(projectId), HttpStatus.NO_CONTENT);
