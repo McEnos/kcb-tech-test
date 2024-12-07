@@ -6,3 +6,64 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+  mysql:
+    image: mysql
+    restart: always
+    container_name: mysql
+    networks:
+      - kcb
+    volumes:
+      - "./data/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myDB
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - "8090:80"
+    depends_on:
+      - mysql
+    networks:
+      - kcb
+
+#https://medium.com/javarevisited/keycloak-integration-with-spring-security-6-37999f43ec85
+#https://stackoverflow.com/questions/78528623/keycloak-move-from-23-0-to-24-0-account-is-not-fully-set-up-invalid-grant
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    restart: unless-stopped
+    environment:
+      KC_DB: mysql
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: root
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB_URL_DATABASE: myDB
+      KC_DB_URL_HOST: mysql
+      KC_DB_URL_PORT: 3306
+      KC_HOSTNAME_STRICT: false
+    networks:
+      - kcb
+    entrypoint: /opt/keycloak/bin/kc.sh start-dev
+    volumes:
+      - "./data/keycloak:/var/lib/keycloak/data"
+    ports:
+      - "8181:8080"
+    depends_on:
+      - mysql
+  SonarQube:
+    image: sonarqube:latest
+    ports:
+      - "9000:9000"
+    restart: always
+    environment:
+      SONARQUBE_JDBC_URL: jdbc:postgresql://localhost:5432/postgres
+      SONARQUBE_JDBC_USERNAME: postgres
+      SONARQUBE_JDBC_PASSWORD: root
+networks:
+  kcb:

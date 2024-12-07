@@ -6,6 +6,8 @@ import org.example.kcbtechtest.entity.Task;
 import org.example.kcbtechtest.exception.TaskNotFoundException;
 import org.example.kcbtechtest.mappers.TaskMapper;
 import org.example.kcbtechtest.repository.TaskRepository;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+//@Scope("singleton")
+//@Lazy
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;

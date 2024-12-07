@@ -5,6 +5,7 @@ import org.example.kcbtechtest.entity.Project;
 import org.example.kcbtechtest.exception.ProjectNotFoundException;
 import org.example.kcbtechtest.mappers.ProjectMapper;
 import org.example.kcbtechtest.repository.ProjectRepository;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +39,7 @@ class ProjectServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        Project project1 = Instancio.create(Project.class);
         project = Project.builder()
                 .name("Test Project")
                 .id(1L)
