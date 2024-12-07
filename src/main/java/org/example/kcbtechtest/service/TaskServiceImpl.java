@@ -9,6 +9,7 @@ import org.example.kcbtechtest.repository.TaskRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,11 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto updateTask(Long taskId, TaskDto taskDto) {
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(("Task not found")));
         task.setDescription(taskDto.getDescription());
-        task.setStatus(task.getStatus());
+        task.setStatus(taskDto.getStatus());
         task.setTitle(taskDto.getTitle());
         task.setDueDate(taskDto.getDueDate());
-        Task savedTask = taskRepository.save(task);
-        return taskMapper.toDto(savedTask);
+        taskRepository.save(task);
+        return taskMapper.toDto(task);
     }
 
     @Override

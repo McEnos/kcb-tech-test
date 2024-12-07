@@ -1,6 +1,7 @@
 package org.example.kcbtechtest.service;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.annotation.Before;
 import org.example.kcbtechtest.dto.ProjectDto;
 import org.example.kcbtechtest.entity.Project;
 import org.example.kcbtechtest.exception.ProjectNotFoundException;
@@ -48,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (project.isEmpty()) {
             throw new ProjectNotFoundException("Project not found");
         }
-        return null;
+        return projectMapper.toDto(project.get());
     }
 
     @Override

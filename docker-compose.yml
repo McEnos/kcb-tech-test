@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   application:
-    image: joshuaenos/application
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"

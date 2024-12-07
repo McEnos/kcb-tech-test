@@ -4,6 +4,7 @@ package org.example.kcbtechtest.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
+import org.example.kcbtechtest.enums.ProjectStatus;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,7 @@ public class TaskDto {
             name = "id", example = "1", description = "primary key for task, should not be passed when creating a new record"
     )
 
-    private int id;
+    private Long id;
 
     @Schema(
             name = "title", requiredMode = Schema.RequiredMode.REQUIRED,
@@ -44,4 +45,10 @@ public class TaskDto {
             description = "Project Id tied to this task"
     )
     private Long projectId;
+    @Schema(
+            name = "status", requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "TO_DO",
+            description = "Status of the task"
+    )
+    private ProjectStatus status;
 }

@@ -44,8 +44,8 @@ public class TaskController {
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(defaultValue = "0") String status,
-                                                  @RequestParam(defaultValue = "10") LocalDate date) {
+    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam  String status,
+                                                  @RequestParam  LocalDate date) {
         return new ResponseEntity<>(taskService.filterTasks(status, date), HttpStatus.OK);
 
     }
