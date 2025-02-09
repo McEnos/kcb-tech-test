@@ -56,6 +56,8 @@ services:
       - "8181:8080"
     depends_on:
       - mysql
+  #https://medium.com/@ahmadbilalch891/how-to-set-up-grafana-loki-and-prometheus-locally-with-docker-compose-part-1-of-3-62fb25e51d92
+  #https://cristianfdev.medium.com/spring-boot-monitoring-a-guide-to-using-grafana-and-prometheus-4d2194945ce8
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -75,6 +77,13 @@ services:
       - ./data/grafana:/etc/grafana/provisioning/datasources:ro
       - ./data/grafana/dashboards:/etc/grafana/provisioning/dashboards/
       - ./data/grafana/alerts:/etc/grafana/provisioning/alerting/
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - "./data/loki/loki-config.yaml:/etc/loki/loki-config.yaml"
+    command: -config.file=/etc/loki/loki-config.yaml
   SonarQube:
     image: sonarqube:latest
     ports:
